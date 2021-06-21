@@ -1,0 +1,205 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Web.master.cs" Inherits="PlantControl.Web" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Controls AMF</title>
+    <asp:ContentPlaceHolder ID="Header" runat="server">
+    </asp:ContentPlaceHolder>
+    <meta charset="utf-8" />
+    <meta name="author" content="Leandro" />
+    <link href="/Content/SiteStyle.css" type="text/css" rel="stylesheet" />
+    <link href="/Content/LoginStyle.css" type="text/css" rel="stylesheet" />
+    <link href="/Content/ChangePassStyle.css" type="text/css" rel="stylesheet" />
+    <link href="/Content/StandardPopUpStyle.css" type="text/css" rel="stylesheet" />
+    <link href="/Images/favicon.ico" rel="icon" />
+    <script src="/Scripts/jquery-3.4.1.js"></script>
+</head>
+
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server" />
+        <header>
+            <nav class="navbarTop">
+                <div class="navbarTopContainer">
+                    <a href="/Views/Index.aspx" title="Main Page">
+                        <img src="/Images/logo.png" alt="icone html" class="logo" />
+                    </a>
+                    <p class="logotext">
+                        American Axle Araucária - Controls Engineering
+                        <asp:Label class="lblName" ID="LblName" runat="server" />
+                    </p>
+
+                    <div class="NavbarTopbuttons" id="loginBtnVis" runat="server">
+                        <button type="button" causesvalidation="false" class="loginbtn" onclick="document.getElementById('id01').style.display='block'" style="width: auto;">LOGIN</button>
+
+                        <div id="id01" class="modal">
+                            <div method="post" class="modal-content animate" action="#" runat="server">
+                                <div class="imgcontainer">
+                                    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                    <img src="/Images/businessman.png" alt="image" class="picture" />
+                                </div>
+
+                                <div id="loginContent" class="container">
+                                    <label for="txtUsername"><b>Username</b></label>
+                                    <input id="txtUser" type="text" placeholder="Enter Username" name="txtUsername" runat="server" required>
+
+                                    <label for="txtPassword"><b>Password</b></label>
+                                    <input id="txtPass" type="password" placeholder="Enter Password" name="txtPassword" runat="server" required>
+                                    <input type="checkbox" onclick="functionShowPass()" />Show Password
+                                    <button type="button" class="submitbtn" runat="server" id="btnLogin" onserverclick="btnLogin_ServerClick" causesvalidation="false">Login</button>
+                                </div>
+
+                                <div class="container" style="background-color: #f1f1f1">
+                                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn" causesvalidation="false">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            // Get the modal
+                            var modal1 = document.getElementById('id01');
+                            var inputPass = document.getElementById("txtPass");
+
+                            // When the user clicks anywhere outside of the modal, close it
+                            window.onclick = function (event) {
+                                if (event.target == modal1) {
+                                    modal1.style.display = "none";
+                                }
+                            }
+
+                            inputPass.addEventListener("keyup", function (event) {
+                                if (event.keyCode === 13) {
+                                    event.preventDefault();
+                                    document.getElementById("btnLogin").click();
+                                }
+                            });
+                            function functionShowPass() {
+                                if (inputPass.type === "password") {
+                                    inputPass.type = "text";
+                                } else {
+                                    inputPass.type = "password";
+                                }
+                            };
+                        </script>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="line"></div>
+
+            <div class="navbarMain">
+                <div class="navbarMainContainer">
+                    <a href="/Views/Index.aspx">HOME</a>
+
+                    <div id="scadaMenu" class="dropdown" runat="server">
+                        <button class="dropbtn" runat="server">SCADA</button>
+                        <div class="dropdown-content">
+                            <a id="menuReviewOverall" runat="server" href="/Views/Scada/Limits/LimitsReviewOverall.aspx">REVIEW OVERALL</a>
+                            <a id="menuReviewLimits" runat="server" href="/Views/Scada/Limits/LimitsReview.aspx">REVIEW LIMITS</a>
+                            <hr id="solidLine" runat="server" class="solid" />
+                            <a id="menuLimitsCompare" runat="server" href="/Views/Scada/Limits/LimitsCompare.aspx">LIMITS COMPARE</a>
+                            <a id="menuLimitsByLine" runat="server" href="/Views/Scada/Limits/LimitsPizza.aspx">LIMITS BY LINE</a>
+                            <a id="menuLimitsConfig" runat="server" href="/Views/Scada/Limits/LimitsConfig.aspx">LIMITS CONFIG</a>
+                            <a id="menuLimitsChart" runat="server" href="/Views/Scada/Limits/LimitsChart.aspx">LIMITS CHART</a>
+                        </div>
+                    </div>
+                    <div id="backupsMenu" class="dropdown" runat="server">
+                        <button class="dropbtn" runat="server">BACKUPS</button>
+                        <div class="dropdown-content">
+                            <a href="/Views/Backups/ViewStatus.aspx">OVERALL STATUS</a>
+                            <a href="/Views/Backups/AssemblyStatus.aspx">ASSEMBLY STATUS</a>
+                            <a href="/Views/Backups/MachiningStatus.aspx">MACHINING STATUS</a>
+                        </div>
+                    </div>
+                    <div id="facilityMenu" class="dropdown" runat="server">
+                        <button class="dropbtn" runat="server">FACILITY</button>
+                        <div class="dropdown-content">
+                            <a href="/Views/Facility/Lights.aspx">LIGHTS</a>
+                            <a href="/Views/Facility/LightsHistory.aspx">LIGHTS HISTORY</a>
+                            <a href="/Views/Facility/AirConditioner.aspx">AIR CONDITIONER</a>
+                        </div>
+                    </div>
+                    <div id="standardMenu" class="dropdown" runat="server">
+                        <button class="dropbtn" runat="server">STANDARD</button>
+                        <div class="dropdown-content">
+                            <a href="/Views/Standard/ControlsAB.aspx">CONTROLS TYPE A/B</a>
+                            <a href="/Views/Standard/ControlsC.aspx">CONTROLS TYPE /C</a>
+                        </div>
+                    </div>
+                    <div id="workReqMenu" class="dropdown" runat="server">
+                        <button class="dropbtn" runat="server">WORK ORDER</button>
+                        <div class="dropdown-content">
+                            <a href="/Views/Request/NewRequest.aspx">NEW ORDER</a>
+                            <a href="/Views/Request/FindRequest.aspx">FIND A ORDER</a>
+                            <a id="viewRequestPageMenu" runat="server" href="/Views/Request/ViewRequests.aspx">VIEW ALL ORDERS</a>
+                        </div>
+
+                    </div>
+                    <div id="downloadMenu" class="dropdown" runat="server">
+                        <button class="dropbtn" runat="server">DOWNLOADS</button>
+                        <div class="dropdown-content">
+                            <a href="/Views/Downloads/DownloadsBackup.aspx">MACHINE BACKUPS</a>
+                        </div>
+                    </div>
+                    <div id="ConfigMenu" class="dropdown" runat="server">
+                        <button class="dropbtn" runat="server">CONFIG.</button>
+                        <div class="dropdown-content">
+                            <a href="/Views/Config/UserHistory.aspx">USER HISTORY</a>
+                            <a href="/Views/Config/ControlsHistory.aspx">CONTROLS HISTORY</a>
+                            <a href="/Views/Config/ConfigBackup.aspx">CONFIG BACKUP</a>
+                            <a href="/Views/Config/ConfigMachine.aspx">CONFIG MACHINES</a>
+                        </div>
+                    </div>
+                    <div runat="server" style="float: right">
+                        <a id="btnChangePass" style="cursor: pointer" runat="server" onclick="document.getElementById('id02').style.display='block'" causesvalidation="false">PASSWORD</a>
+                        <a id="btnLogoff" style="cursor: pointer" runat="server" onserverclick="btnLogoff_ServerClick" causesvalidation="false">LOGOFF</a>
+                    </div>
+
+                    <div id="id02" class="modal">
+                        <div method="post" class="modal-content animate" action="#" runat="server">
+                            <div class="imgcontainer">
+                                <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                <label><b>Change Password</b></label>
+                            </div>
+                            <div id="loginContent2" class="container">
+                                <label for="txtOldPass"><b>Old Password</b></label>
+                                <input id="txtOldPass" type="password" placeholder="Enter Old Password" name="txtOldPass" runat="server" required>
+
+                                <label for="txtNewPass1"><b>New Password</b></label>
+                                <input id="txtNewPass1" type="password" placeholder="Enter New Password" name="txtNewPass1" runat="server" required>
+
+                                <label for="txtNewPass2"><b>Repeat New Password</b></label>
+                                <input id="txtNewPass2" type="password" placeholder="Enter New Password" name="txtNewPass2" runat="server" required>
+
+                                <button type="button" class="submitbtn" runat="server" id="ChangePass" onserverclick="ChangePass_ServerClick" causesvalidation="false">Change</button>
+                            </div>
+                            <div class="container" style="background-color: #f1f1f1">
+                                <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn" causesvalidation="false">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        // Get the modal
+                        var modal = document.getElementById('id02');
+
+                        // When the user clicks anywhere outside of the modal, close it
+                        window.onclick = function (event) {
+                            if (event.target == modal) {
+                                modal.style.display = "none";
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+        </header>
+
+        <div id="div2" class="mainContent">
+            <asp:ContentPlaceHolder ID="Main" runat="server">
+            </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="Footer" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
